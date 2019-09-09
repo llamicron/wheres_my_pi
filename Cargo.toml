@@ -7,3 +7,4 @@ edition = "2018"
 [dependencies]
 reqwest = "0.9.20"
 pnet = "0.22.0"
+dirs = "2.0.2"

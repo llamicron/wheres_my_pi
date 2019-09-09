@@ -1,19 +1,21 @@
 extern crate reqwest;
 extern crate pnet;
+extern crate dirs;
 
-use std::{io, fs};
+use std::fs;
 use std::process::exit;
 use std::net::IpAddr;
 use std::path::PathBuf;
 use std::fmt::Write;
 use std::collections::HashMap;
+use dirs::home_dir;
 
 use pnet::datalink;
 
 /// Reads a webhook from ~/.wheres_my_pi
 /// See discord documentation for creating a webhook
 fn get_webhook() -> String {
-    let mut path = PathBuf::from(std::env::home_dir().unwrap());
+    let mut path = PathBuf::from(home_dir().unwrap());
     path.push(".wheres_my_pi");
     match fs::read_to_string(path) {
         Ok(webhook) => return webhook,
