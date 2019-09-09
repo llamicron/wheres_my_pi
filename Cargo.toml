@@ -8,3 +8,9 @@ edition = "2018"
 reqwest = "0.9.20"
 pnet = "0.22.0"
 dirs = "2.0.2"
+
+# Size optimizations
+[profile.release]
+opt-level = 'z'
+lto = true
+panic = 'abort'
