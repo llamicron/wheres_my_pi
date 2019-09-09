@@ -10,6 +10,8 @@ use std::collections::HashMap;
 
 use pnet::datalink;
 
+/// Reads a webhook from ~/.wheres_my_pi
+/// See discord documentation for creating a webhook
 fn get_webhook() -> String {
     let mut path = PathBuf::from(std::env::home_dir().unwrap());
     path.push(".wheres_my_pi");
@@ -22,6 +24,8 @@ fn get_webhook() -> String {
     }
 }
 
+/// Gets a Vec<IpAddr> of all IPs that are not loopback and are IPv4
+/// Usually only one
 fn get_interfaces() -> Vec<IpAddr> {
     let mut interfaces: Vec<IpAddr> = vec![];
     for iface in datalink::interfaces() {
@@ -36,6 +40,10 @@ fn get_interfaces() -> Vec<IpAddr> {
     interfaces
 }
 
+/// Created a dictionary like this {"content": "..."} to send to Discord
+///
+/// The message is a formatted string of all the IP addresses with
+/// a little crab emoji because it's rust
 fn get_payload(interfaces: &Vec<IpAddr>) -> HashMap<&str, String> {
     let mut payload = HashMap::new();
 
@@ -48,6 +56,7 @@ fn get_payload(interfaces: &Vec<IpAddr>) -> HashMap<&str, String> {
     payload
 }
 
+/// Construct the payload, then send it
 fn main() {
     let webhook = get_webhook();
     let interfaces = get_interfaces();
