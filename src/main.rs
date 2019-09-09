@@ -1,3 +1,13 @@
 fn main() {
-    println!("Hello, world!");
+    println!("It works!");
+}
+
+#[cfg(test)]
+mod tests {
+    // use super::*;
+
+    #[test]
+    fn it_works() {
+        assert!(true);
+    }
 }
