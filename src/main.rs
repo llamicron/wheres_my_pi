@@ -42,7 +42,7 @@ fn get_interfaces() -> Vec<IpAddr> {
     interfaces
 }
 
-/// Created a dictionary like this {"content": "..."} to send to Discord
+/// Creates a dictionary like this {"content": "..."} to send to Discord
 ///
 /// The message is a formatted string of all the IP addresses with
 /// a little crab emoji because it's rust
@@ -65,6 +65,12 @@ fn main() {
     let payload = get_payload(&interfaces);
 
     let client = reqwest::Client::new();
+
+    println!("Addresses found:");
+    for addr in &interfaces {
+        println!(" - {}", addr);
+    }
+
     client.post(&webhook)
           .json(&payload)
           .send()
