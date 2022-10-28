@@ -14,10 +14,8 @@ use pnet::datalink;
 
 /// Reads a webhook from ~/.wheres_my_pi
 /// See discord documentation for creating a webhook
-fn get_webhook() -> String {
-    let mut path = PathBuf::from(home_dir().unwrap());
-    path.push(".wheres_my_pi");
-    match fs::read_to_string(path) {
+fn get_webhook(from: PathBuf) -> String {
+    match fs::read_to_string(from) {
         Ok(webhook) => return webhook,
         Err(why) => {
             println!("An error occured, could not retrieve webhook: {}", why);
@@ -60,7 +58,15 @@ fn get_payload(interfaces: &Vec<IpAddr>) -> HashMap<&str, String> {
 
 /// Construct the payload, then send it
 fn main() {
-    let webhook = get_webhook();
+    let args: Vec<String> = std::env::args().collect();
+    let webhook = match args.get(1) {
+        Some(path) => get_webhook(PathBuf::from(path)),
+        None => {
+            let mut path = home_dir().unwrap();
+            path.push(".wheres_my_pi");
+            get_webhook(path)
+        }
+    };
     let interfaces = get_interfaces();
     let payload = get_payload(&interfaces);
 
