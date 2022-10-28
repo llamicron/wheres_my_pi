@@ -1,6 +1,9 @@
 # Where's my Pi?
 This is a small application that sends a machines IP addresses to your discord webhook when it boots up. I use it to keep track on my raspberry Pis. They get new IP addresses every once in a while, and I hate having to go to my modem homepage or connect a keyboard and monitor just to figure out the IP so I can remote into them anyway. Now you can just restart them and it'll send you the IP.
 
+# Nightly note
+This requires rust nightly. I wrote it a long time ago. I'll try to port it to stable 2021 soon.
+
 # Usage
 Install with cargo
 
