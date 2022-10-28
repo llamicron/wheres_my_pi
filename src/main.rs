@@ -64,16 +64,17 @@ fn main() {
     let interfaces = get_interfaces();
     let payload = get_payload(&interfaces);
 
-    let client = reqwest::Client::new();
+    let client = reqwest::blocking::Client::new();
 
     println!("Addresses found:");
     for addr in &interfaces {
         println!(" - {}", addr);
     }
 
+
     client.post(&webhook)
-          .json(&payload)
-          .send()
-          .expect("Something went wrong, could not send :(");
+        .json(&payload)
+        .send()
+        .expect("Something went wrong, could not send :(");
 }
 
